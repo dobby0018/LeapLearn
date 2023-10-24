@@ -1,8 +1,9 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Redirect;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,11 +14,17 @@ use App\Http\Controllers\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
 
+
+//user authentication
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
-Route::get('/contact',[HomeController::class,'contact'])->name("sendmail");
+// Route::get('/contact',[HomeController::class,'contact'])->name("sendmail");
 Route::get('/signup', [UserController::class,'signup']);
 Route::post('/signup', [UserController::class,'registration']);
 Route::get('/login', [UserController::class,'login']);
@@ -31,3 +38,13 @@ Route::get('/forgot', function () {
 Route::get('/newpass', function () {
     return view('new_password');
 });
+
+
+
+//routes for the homepage url
+Route::middleware(['mymiddleware'])->group(function () {
+    // Define routes that should use the 'mymiddleware' middleware.
+    Route::get('/home',[HomeController::class,'Home']);
+});
+
+

@@ -53,11 +53,24 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 
 @enderror
+
+@error('login')
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ $message }}</strong> <br>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+@enderror
 @if (session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
     </div>
 @endif
+
+
 	<img class="logo" src="{{ asset('css/style.css') }}">
 	<img class="wave" src="{{ asset('img/wave.png') }}">
 	<div class="container">
