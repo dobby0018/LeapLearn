@@ -879,7 +879,7 @@ footer .box a:hover {
           <span class="icon"><i class="fas fa-lock"></i></span>
           <span class="title">Transections</span>
           </a></li>
-        <li><a href="#">
+        <li><a href="{{ url('/') }}/purchased">
           <span class="icon"><i class="fas fa-book"></i></span>
           <span class="title">My courses</span>
           </a></li>
@@ -887,13 +887,13 @@ footer .box a:hover {
     <ul class="settings">
         <li><a href="#">
           <span class="icon"><i class="fas fa-cog"></i></span>
-          <span class="title">Settings</span>
+          <span class="title">{{ session('userdata.username') }}</span>
           </a></li>
         <li><a href="#">
           <span class="icon"><i class="fas fa-info-circle"></i></span>
           <span class="title">Help</span>
           </a></li>
-        <li><a href="#">
+        <li><a href="{{ url('/') }}/u/logout">
           <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
           <span class="title">Sign out</span>
           </a></li>

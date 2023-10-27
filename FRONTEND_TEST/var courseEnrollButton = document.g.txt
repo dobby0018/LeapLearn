@@ -1,0 +1,7 @@
+  var courseEnrollButton = document.getElementById("course_enroll");
+
+//     // Add a click event listener to the element
+//     courseEnrollButton.addEventListener("click", function() {
+//         // Redirect to the specified Laravel route
+//         window.location.href = "{{ route('coursepurchase')->with('course_id',${course.id}) }}";
+//     });

@@ -25,7 +25,14 @@ class UserController extends Controller
         if ($request->userType=='Student'){
         $user=users::where('username','=',$request->username)->first();
         if($user&&$request->password==$user->password){
-            Auth::login($user); // Log in the user
+            // Auth::login($user); // Log in the user
+            $data = [
+                'userid'=>$user->user_id,
+                'username' => $request->username,
+                'email' => $user->email,
+                'name' => $request->first_name
+            ];
+            session(['userdata'=>$data]);
             return redirect('home');
 
         }else
@@ -37,7 +44,7 @@ class UserController extends Controller
         if($user&&$request->password==$user->password){
             Auth::login($user); // Log in the user
 
-            return redirect('home');
+            return redirect('name');
         }
 
             else
@@ -182,7 +189,7 @@ class UserController extends Controller
          $user->password=session('password');
         $user->save();
         session()->flush();
-            return view('auth.login')->with('success','New User Account created');}
+            return redirect('/login');}
 
         else
         return back()->with('error', 'Invalid OTP. Please try again.');

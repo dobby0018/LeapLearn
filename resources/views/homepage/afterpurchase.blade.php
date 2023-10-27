@@ -9,9 +9,7 @@
   <title>Course Page before enroll</title>
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-
-  <style>
+<style>
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
 
 * {
@@ -387,6 +385,13 @@ body {
      white-space: nowrap;
     }
 
+    .module iframe {
+      margin-left: 40px;
+      height: 50%;
+      width: 40%;
+      margin-bottom: 10px;
+    }
+
 	 .table-of-contents {
     margin-top: 20px;
   }
@@ -418,9 +423,12 @@ body {
     font-weight: 400;
     margin-left: 20px;
   }
+
+
   </style>
 </head>
 
+<body>
 
     <div class="main_container">
       <div class="course_name" id="course_name"></div>
@@ -445,18 +453,7 @@ body {
     </div>
   </div>
 
-  <footer>
-    <div class="box">
-      <h3>Quick Links</h3>
-      <a href="#">About Us</a>
-      <br>
-      <a href="#">Contact Us</a>
-    </div>
-    <div class="box">
-      <h3>Follow Us</h3>
-      <a href="#">LinkedIn</a>
-    </div>
-  </footer>
+
 
   <script>
     // Course data
@@ -466,30 +463,18 @@ body {
 const courseId = 1; // Adjust this based on the course you want to display
 
 const course = courses.find(course => course.courseId === courseId);
-
 if (course) {
 //course deatils like name, description, time, price, etc
   document.getElementById("course_name").innerText = course.title;
-  document.querySelector(".course_image").style.backgroundImage = `url(${course.imageUrl})`;
+  document.querySelector(".course_image").style.backgroundImage = `url({{ asset('${course.imageUrl}') }})`;
   document.getElementById("course_description").innerText = course.description;
   document.getElementById("course_time").innerText = `Time: ${course.time}`;
   //on button show price of course
-//
-var courseEnrollButton = document.getElementById("course_enroll");
-
-    // Add a click event listener to the element
-    courseEnrollButton.addEventListener("click", function() {
-        // Get the course ID from the element or wherever it is available
-        var courseId = course.id; // Replace with the actual course ID
-
-        // Construct the URL with the course ID as a query parameter
-        var redirectUrl = "{{ route('coursepurchase') }}?course_id=" + courseId;
-
-        // Redirect to the specified URL
-        window.location.href = redirectUrl;});
-
-  document.getElementById("course_enroll").innerHTML = `<button>Enroll for ${course.price}</button>`;
-
+  document.getElementById("course_enroll").innerHTML = `<button>Enrolled</button>`;
+  document.getElementById("course_enroll").onclick = function() {
+    alert("Button Clicked!");
+    // Add your custom actions here
+  };
 
   //module list
   const moduleList = document.getElementById("module_list");
@@ -503,9 +488,40 @@ var courseEnrollButton = document.getElementById("course_enroll");
     const moduleDiv = document.createElement("div");
     moduleDiv.classList.add("module");
     moduleDiv.innerHTML = `<p><strong>Module ${index + 1}:</strong> ${module.description}</p>`; // Title : Description
+
+    
+    //create a box for video
+    if (module.videoUrl) {
+      const videoDiv = document.createElement("div");
+      videoDiv.innerHTML = `<iframe src="{{ asset('${module.videoUrl}') }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      videoDiv.style.display = "none";
+      moduleDiv.appendChild(videoDiv);
+      moduleDiv.videoDiv = videoDiv; // Attach videoDiv to the moduleDiv
+    }
+
+    // When a module is clicked, hide all other video blocks and show the clicked module's video
+    moduleDiv.addEventListener("click", () => {
+      moduleDivs.forEach((div) => {
+        if (div !== moduleDiv) {
+          div.videoDiv.style.display = "none";
+        }
+      });
+
+      const videoDiv = moduleDiv.videoDiv;
+      if (videoDiv.style.display === "none") {
+        videoDiv.style.display = "block";
+      } else {
+        videoDiv.style.display = "none";
+      }
+    });
+
+    moduleDivs.push(moduleDiv);
     moduleList.appendChild(moduleDiv);
   });
 }
+
+  </script>
+  <script>
 
   </script>
 </body>

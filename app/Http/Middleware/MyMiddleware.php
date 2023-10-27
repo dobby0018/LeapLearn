@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth\Authenticatable;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,10 @@ class MyMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check()){return $next($request);}
+        if (session()->has('userdata')){
+
+            return $next($request);}
         return redirect('/login');
     }
-    
+
 }

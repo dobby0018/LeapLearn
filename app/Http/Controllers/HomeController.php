@@ -6,6 +6,8 @@ use App\Mail\ContactMail;
 use App\Models\courses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -44,8 +46,25 @@ class HomeController extends Controller
 
 
 
-    public function coursepage($id)
+    public function homee()
     {
+        if (session()->has('userdata'))
+        {
+            print_r("yesss");
+        }
+        else{
+            print_r("noo");
 
+        }
     }
+    public function logout()
+{
+    // Perform logout actions
+
+    // Regenerate the session ID to end the current session
+
+    session()->flush();
+
+    return redirect('login'); // Redirect the user to the login page
+}
 }
