@@ -10,4 +10,5 @@ class users extends Authenticatable
     use HasFactory;
     protected $table="users";
     protected $primarykey="user_id";
+    
 }

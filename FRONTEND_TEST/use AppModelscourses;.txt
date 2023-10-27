@@ -1,0 +1,16 @@
+use App\Models\courses;
+use App\Models\modules;
+$course = courses::with('Modules')->where('Course_id', 1)->first();
+$data = [
+        'Course_id' => $course->Course_id,
+        'Course_name' => $course->Course_name,
+        'Course_desc' => $course->Course_desc,
+        'Price' => $course->Price,
+        'Modules' => $course->Modules->map(function ($module) {
+            return [
+                'Module_no' => $module->Module_no,
+                'Module_desc' => $module->Module_desc,
+                // Add more module attributes here if needed
+            ];
+        }),
+    ];

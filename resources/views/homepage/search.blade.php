@@ -1,3 +1,5 @@
+@extends('homepage.layouts.main')
+@section('main-section')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,60 +7,7 @@
 	<title>Trending course</title>
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script>
-  $(document).ready(function () {
-    adjustLayoutOnSidebarToggle();
-});
 
-		$(document).ready(function(){
-			$(".indiv").click(function(){
-			   $(".wrapper").toggleClass("collapse");
-      adjustLayoutOnSidebarToggle();
-			});
-		});
-
-  function adjustLayoutOnSidebarToggle() {
-     const isSidebarCollapsed = $('.wrapper').hasClass('collapse');
-
-     const courseCards = document.querySelectorAll('.course-card');
-
-     courseCards.forEach(card => {
-       if (isSidebarCollapsed) {
-         card.style.margin = '20px 10px 10px 20px';
-         card.style.width = 'calc(30% - 10px)';
-       } else {
-         card.style.margin = '20px 10px 10px 20px';
-          card.style.width = 'calc(30% - 2px)';
-       }
-     });
-
-     const slideImages = document.querySelectorAll(".mySlides img");
-      slideImages.forEach(img => {
-          if (isSidebarCollapsed) {
-              img.style.width = "100%";
-              img.style.maxWidth = "none";
-              img.style.marginLeft = "0";
-          } else {
-              img.style.width = "100%";
-              img.style.maxWidth = "none";
-              img.style.marginLeft = "0";
-          }
-      });
-
-
-  }
-
-  // JavaScript to show the footer when the user scrolls to the bottom of the page
-  window.addEventListener('scroll', function() {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      // Show the footer when scrolled to the bottom
-      document.querySelector('footer').style.display = 'flex';
-    } else {
-      // Hide the footer when not scrolled to the bottom
-      document.querySelector('footer').style.display = 'none';
-    }
-  });
-	</script>
  <style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
 
@@ -483,64 +432,12 @@ footer .box a:hover {
 </head>
 <body>
 
-<div class="wrapper">
-  <div class="top_navbar">
-    <div class="indiv">
-      <img src="img/Leap Learn logo.png" class="logo">
 
-    </div>
-    <div class="top_menu">
-
-      <form class="search">
-       <input type="text" placeholder="Search.." >
-       <i class="fas fa-search"></i>
-     </form>
-
-      <ul>
-        <li><a href="#">
-          <i class="fas fa-envelope"></i>
-          </a></li>
-        <li><a href="#">
-          <i class="fas fa-user"></i>
-          </a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="sidebar">
-      <ul>
-        <li><a href="#">
-          <span class="icon"><i class="fas fa-user"></i></span>
-          <span class="title">Profile</span></a></li>
-        <li><a href="#">
-          <span class="icon"><i class="fas fa-lock"></i></span>
-          <span class="title">Transections</span>
-          </a></li>
-        <li><a href="#">
-          <span class="icon"><i class="fas fa-book"></i></span>
-          <span class="title">My courses</span>
-          </a></li>
-    </ul>
-    <ul class="settings">
-        <li><a href="#">
-          <span class="icon"><i class="fas fa-cog"></i></span>
-          <span class="title">Settings</span>
-          </a></li>
-        <li><a href="#">
-          <span class="icon"><i class="fas fa-info-circle"></i></span>
-          <span class="title">Help</span>
-          </a></li>
-        <li><a href="#">
-          <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
-          <span class="title">Sign out</span>
-          </a></li>
-    </ul>
-  </div>
 
 <div class="main_container">
 
  <div class="Trending">
-   <h2>Trending Courses</h2>
+   <h2>{{ $name }} Courses</h2>
    <div id="trending-course-container" class="course-container">
      <!-- Display 4 courses initially -->
      <div class="course-card">
@@ -578,164 +475,18 @@ footer .box a:hover {
 
 <script>
   //course-card
-  const courses = [
-  {
-    title: "Course 1",
-    description: "Description for Course 1 jdc ffv sxfkc ksfckm",
-    level: "Intermediate",
-    imageUrl: "c1.png",
-    popular: 'true'
-  },
-  {
-    title: "Course 2",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "c2.png",
-    popular: 'true'
-  },
-  {
-    title: "Course 3",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "c1.png",
-    popular: 'true'
-  },
-  {
-    title: "Course 4",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "c1.png",
-    popular: 'true'
-  },
-  {
-    title: "Course 5",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "c1.png",
-    popular: 'false'
-  },
-  {
-    title: "Course 1",
-    description: "Description for Course 1",
-    level: "Intermediate",
-    imageUrl: "c1.png",
-    popular: 'false'
-  },
-  {
-    title: "Course 2",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free"
-  },
-  {
-    title: "Course 3",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free"
-  },
-  {
-    title: "Course 4",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free",
-    popular: 'true'
-  },
-  {
-    title: "Course 5",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free",
-    popular: 'true'
-  },
-  {
-    title: "Course 1",
-    description: "Description for Course 1",
-    level: "Intermediate",
-    imageUrl: "img/logo.png",
-    price:"free"
-  },
-  {
-    title: "Course 2",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free",
-    popular: 'true'
-  },
-  {
-    title: "Course 3",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"1000"
-  },
-  {
-    title: "Course 4",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"1000"
-  },
-  {
-    title: "Course 5",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"1000"
-  },
-  {
-    title: "Course 1",
-    description: "Description for Course 1",
-    level: "Intermediate",
-    imageUrl: "img/logo.png",
-    price:"1000"
-  },
-  {
-    title: "Course 2",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free"
-  },
-  {
-    title: "Course 3",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free"
-  },
-  {
-    title: "Course 4",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free"
-
-  },
-  {
-    title: "Course 5",
-    description: "Description for Course 2",
-    level: "Beginner",
-    imageUrl: "img/logo.png",
-    price:"free"
-  },
- 
-  ];
+  const courses = <?php echo json_encode($course); ?>;
 
   function createCourseCard(course) {
   const card = document.createElement('div');
   card.classList.add('course-card');
   card.innerHTML = `
-    <img src="${course.imageUrl}" alt="${course.title}" style="width: 100%; height: auto;">
+    <img src="{{ asset('${course.imageUrl}') }}" alt="${course.title}" style="width: 100%; height: auto;">
     <h3>${course.title}</h3>
     <p>${course.description}</p>
     <p>Level: ${course.level}</p>
     <p>Price: ${course.price}</p>
-    <a href="#">View Course</a>
+    <a href="{{ '${course.url} '}}">View Course</a>
   `;
   return card;
 }
@@ -763,3 +514,4 @@ function displayCourses(course, containerId) {
 </script>
 </body>
 </html>
+@endsection

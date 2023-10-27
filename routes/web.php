@@ -1,9 +1,12 @@
 <?php
+
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,9 +45,19 @@ Route::get('/newpass', function () {
 
 
 //routes for the homepage url
-Route::middleware(['mymiddleware'])->group(function () {
-    // Define routes that should use the 'mymiddleware' middleware.
-    Route::get('/home',[HomeController::class,'Home']);
-});
+// Route::middleware(['mymiddleware'])->group(function () {
+//     // Define routes that should use the 'mymiddleware' middleware.
+//     Route::get('/home',[HomeController::class,'Home']);
+// });
+// Route::get('/homee',function(){
+//     return view('homepage.home');
+// });
 
+Route::get('/home',[HomeController::class,'Home']);
 
+Route::get('/{course}',[CourseController::class,'coursetype']);
+Route::get('/course/{id}',[CourseController::class,'course'])->name('indicourse');
+// Route::get('/finance',[CourseController::class,'finance']);
+// Route::get('/literature',[CourseController::class,'literature']);
+// Route::get('/development',[CourseController::class,'development']);
+Route::get('/cours/search',[CourseController::class,'search']);
