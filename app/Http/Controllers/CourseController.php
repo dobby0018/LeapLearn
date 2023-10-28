@@ -57,7 +57,17 @@ class CourseController extends Controller
     {
         if ($coursetype=='finance')
         {
-            $courses=courses::where('Course_group',3)->get();
+             $courseIds = purchased::where('User_id', session('userdata.userid'))->pluck('Course_id')->toArray();
+
+                    $courses = courses::where('Course_group', 3)->get();
+
+                    if (!empty($courseIds)) {
+                        $courses = $courses->reject(function ($course) use ($courseIds) {
+                            return in_array($course->Course_id, $courseIds);
+                        });
+                    }
+
+
         foreach ($courses as $course) {
             $Course[] = [
                 'title' => $course['Course_name'],
@@ -71,7 +81,13 @@ class CourseController extends Controller
     return view('homepage.allcourse',['course' => $Course,'name'=>'Finance']);
         }elseif($coursetype=='development')
         {
+            $courseIds = purchased::where('User_id', session('userdata.userid'))->pluck('Course_id')->toArray();
             $courses=courses::whereIn('Course_group',[1,4])->get();
+            if (!empty($courseIds)) {
+                $courses = $courses->reject(function ($course) use ($courseIds) {
+                    return in_array($course->Course_id, $courseIds);
+                });
+            }
             foreach ($courses as $course) {
                 $Course[] = [
                     'title' => $course['Course_name'],
@@ -86,7 +102,13 @@ class CourseController extends Controller
         }
         elseif($coursetype=='literature')
         {
+            $courseIds = purchased::where('User_id', session('userdata.userid'))->pluck('Course_id')->toArray();
             $courses=courses::where('Course_group',2)->get();
+            if (!empty($courseIds)) {
+                $courses = $courses->reject(function ($course) use ($courseIds) {
+                    return in_array($course->Course_id, $courseIds);
+                });
+            }
         foreach ($courses as $course) {
             $Course[] = [
                 'id'=>$course['Course_id'],

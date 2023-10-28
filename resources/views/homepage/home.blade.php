@@ -161,9 +161,9 @@
     return card;
   }
 
-  const courseToShow_1 = <?php echo json_encode($course); ?>.slice(0,4);
-  const courseToShow_2 = <?php echo json_encode($course); ?>.slice(0,4);
-  const courseToShow_3 = <?php echo json_encode($course); ?>.slice(0,4);
+  const courseToShow_1 = <?php echo json_encode($course1); ?>.slice(0,4);
+  const courseToShow_2 = <?php echo json_encode($course2); ?>.slice(0,4);
+  const courseToShow_3 = <?php echo json_encode($course3); ?>.slice(0,4);
   function displayCourses(courseToShow, containerId) {
     const courseContainer = document.getElementById(containerId);
     courseContainer.innerHTML = '';
