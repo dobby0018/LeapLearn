@@ -8,6 +8,7 @@
 @extends('homepage.layouts.main')
 
 @section('main-section')
+
 <div class="main_container">
     <div class="item">
 

@@ -133,7 +133,7 @@ class UserController extends Controller
         session([
             'username' => $request['username'],
             'email' => $request['email'],
-            'password' => bcrypt($request['password']),
+            'password' => $request['password'],
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
 

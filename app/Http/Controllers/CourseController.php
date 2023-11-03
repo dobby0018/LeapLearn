@@ -163,6 +163,7 @@ class CourseController extends Controller
                 'title' => $course->Course_name,
                 'description' => $course->Course_desc,
                 'level'=>$course->Level,
+                'imageUrl'=>$course->Image,
                 'price' => $course->Price,
                 'time'=>"2sws",
                 'modules' => $course->Modules->map(function ($module) {
@@ -241,7 +242,7 @@ class CourseController extends Controller
                     return [
                         'title' => "Module $module->Module_no",
                         'description' => $module->Module_desc,
-                        'videoUrl'=> "hell.mp4"
+                        'videoUrl'=> "new.mp4"
                         // Add more module attributes here if needed
                     ];
                 }),

@@ -1,0 +1,179 @@
+<!--
+    <div class="container">
+        <h2>Create a New Course</h2>
+        <form method="POST" action="{{ route('courses.store') }}">
+            @csrf
+            <div class="form-group">
+                <label for="title">Course Title:</label>
+                <input type="text" name="title" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">Course Description:</label>
+                <textarea name="description" id="description" class="form-control"></textarea>
+            </div>
+
+            <h3>Add Modules:</h3>
+            <div id="modules-container">
+                <div class="module">
+                    <div class="form-group">
+                        <label for="module_title[]">Module Title:</label>
+                        <input type="text" name="module_title[]" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="module_content[]">Module Content:</label>
+                        <textarea name="module_content[]" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="add-module" class="btn btn-primary">Add Module</button>
+
+            <button type="submit" class="btn btn-success">Create Course</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('add-module').addEventListener('click', function() {
+            const modulesContainer = document.getElementById('modules-container');
+            const module = document.querySelector('.module');
+            const clone = module.cloneNode(true);
+            modulesContainer.appendChild(clone);
+        });
+    </script>
+ -->
+ <!-- <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .module {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Course Management</h1>
+
+    <form id="courseForm">
+        <label for="courseName">Course Name:</label>
+        <input type="text" id="courseName" required>
+
+        <label for="courseDescription">Course Description:</label>
+        <textarea id="courseDescription" required></textarea>
+
+        <h2>Course Modules:</h2>
+        <div id="modulesContainer">
+
+        </div>
+
+        <button type="button" id="addModule">Add Module</button>
+
+        <input type="submit" value="Save Course">
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const courseForm = document.getElementById('courseForm');
+            const modulesContainer = document.getElementById('modulesContainer');
+            const addModuleButton = document.getElementById('addModule');
+
+            let moduleCount = 0;
+
+            // Function to add a new module field
+            function addModuleField() {
+                moduleCount++;
+                const moduleDiv = document.createElement('div');
+                moduleDiv.classList.add('module');
+                moduleDiv.innerHTML = `
+                    <label for="moduleName${moduleCount}">Module Name:</label>
+                    <input type="text" name="moduleName${moduleCount}" required>
+                    <label for="moduleDescription${moduleCount}">Module Description:</label>
+                    <textarea name="moduleDescription${moduleCount}" required>
+                    <button type="button" class="deleteModule">Delete Module</button>
+                `;
+                modulesContainer.appendChild(moduleDiv);
+            }
+
+            // Function to delete a module field
+            function deleteModuleField(event) {
+                const moduleDiv = event.target.parentElement;
+                modulesContainer.removeChild(moduleDiv);
+            }
+
+            // Add module on button click
+            addModuleButton.addEventListener('click', addModuleField);
+
+            // Delete module on button click
+            modulesContainer.addEventListener('click', function (event) {
+                if (event.target.classList.contains('deleteModule')) {
+                    deleteModuleField(event);
+                }
+            });
+
+            // Handle form submission (you would need to send this data to the backend)
+            courseForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formData = new FormData(courseForm);
+                const courseData = {};
+                formData.forEach((value, key) => {
+                    courseData[key] = value;
+                });
+                console.log(courseData);
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+<button id="showPopupButton">Open Popup Form</button>
+
+<div id="popupForm" class="popup">
+    <form id="popupSubmitForm" enctype="multipart/form-data">
+        <!-- Form fields go here -->
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        <br>
+
+        <label for="video">Attach Video:</label>
+        <input type="file" name="video" id="video" accept="video/*" required>
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<style>
+    .popup {
+        display: none;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        position: relative;
+        width: 400px; /* Adjust the width as needed */
+        max-height: 80vh; /* Adjust the maximum height as needed */
+        overflow-y: auto; /* Enable vertical scrolling if the content overflows */
+    }
+
+
+    button {
+        margin-bottom: 20px; /* Add spacing below the button */
+    }
+
+</style>
+<script>
+    const showPopupButton = document.getElementById('showPopupButton');
+const popupForm = document.getElementById('popupForm');
+
+showPopupButton.addEventListener('click', function () {
+    popupForm.style.display = 'block';
+});
+
+// Close the popup when the form is submitted
+const popupSubmitForm = document.getElementById('popupSubmitForm');
+popupSubmitForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    // Process the form submission (e.g., send data to the backend)
+    // Then close the popup
+    popupForm.style.display = 'none';
+});
+</script>

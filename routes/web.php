@@ -76,3 +76,6 @@ Route::get('/u/logout',function(){
 // Route::get('/literature',[CourseController::class,'literature']);
 // Route::get('/development',[CourseController::class,'development']);
 // Route::get('/cours/search',[CourseController::class,'search']);
+
+
+Route::post('/store-payment', [\App\Http\Controllers\paymentController::class,'payment'])->name('payment');

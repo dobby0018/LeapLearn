@@ -12,7 +12,7 @@
 
 
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
+      @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
 
 * {
       margin: 0;
@@ -303,7 +303,8 @@ body {
 
     .con {
       display: flex;
-      height: 150px;
+      flex-wrap: wrap;
+      align-items:flex-start;
     }
 
     .course_image {
@@ -315,52 +316,54 @@ body {
 }
 
 .course_description {
-    font-size: 16px;
-    margin-bottom: 20px;
-    margin-left: 40px;
-    width: calc(100% - 300px);
-    font-size: 20px;
-    text-align: justify;
-
-
+  font-size: 16px;
+  margin-bottom: 20px;
+  margin-left: 40px;
+  width: calc(100% - 300px);
+  font-size: 20px;
+  text-align: justify;
+  flex: 1;
+  overflow-y: auto; /* Add this to make the course description scrollable */
+  max-height: 300px; /* Set a maximum height for scrollable content (adjust as needed) */
 }
-    .con2 {
+
+.con2 {
       display: flex;
       margin-left: 330px;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
 
-    .course_time {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
+.course_time {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-right: 400px;
+}
 
-    .course_enroll button {
-      margin-left: 400px;
-      margin-bottom: 20px;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
-      background: #38d39f;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+.course_enroll button {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #38d39f;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
 
 
-    .course_content {
-      border: #000000 1px solid;
-      width: 60%;
-      height: 100%;
-      font-size: 10px;
-      color: #000000;
-		transform: translate(250px , 10px);
-		padding: 10px;
-
-    }
+.course_content {
+  border: #000000 1px solid;
+  width: 60%;
+  font-size: 10px;
+  color: #000000;
+  transform: translate(250px, 10px);
+  padding: 10px;
+}
 
     .module {
       border: #000000 1px solid;
@@ -387,15 +390,15 @@ body {
      white-space: nowrap;
     }
 
-	 .table-of-contents {
-    margin-top: 20px;
-  }
+.table-of-contents {
+  margin-top: 20px;
+  width: 100%; /* Set the width to 100% to prevent overlap */
+}
 
   .table-of-contents h3 {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 10px;
-    margin-left: 40px;
   }
 
   .table-of-contents ul {
@@ -432,9 +435,42 @@ body {
       </div>
       <div class="con2">
         <div class="course_time" id="course_time"></div>
-        <div class="course_enroll" id="course_enroll">
-          <!-- Enrollment button -->
-        </div>
+        <form class="contribution-form" id="contribution-form" method="POST"  action="{{route('payment', ['data' => $course])}}">
+            @csrf
+
+            <script src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="{{env('rzr_key')}}" data-amount="{{ $course['price']*100 }}"
+    data-name="online web tutorials" data-description="Razorpay Payment Example"
+    data-image="{{ asset('logo.png') }}"
+    data-prefill.email="email" data-theme.color="#ff7529">
+</script>
+
+{{-- <script>
+    // Wait for the Razorpay script to load
+    window.addEventListener('load', function() {
+        // Disable the "Pay Now" button
+        document.querySelector('.razorpay-payment-button').disabled = true;
+        document.getElementById('razorpay-payment-button').style.display = 'none';
+    });
+</script> --}}
+<script>
+    // Wait for the Razorpay script to load
+    var buttonToHide = document.querySelector('.razorpay-payment-button');
+
+    // Check if the button element exists
+    if (buttonToHide) {
+        // Hide the button by setting its display property to 'none'
+        buttonToHide.style.display = 'none';
+    }
+</script>
+
+
+            <!-- Add a button here -->
+            <div class="course_enroll" id="course_enroll">
+                <!-- Enrollment button -->
+              </div>
+        </form>
+
       </div>
 
       <div class="course_content" id="course_content">
@@ -470,23 +506,23 @@ const course = courses.find(course => course.courseId === courseId);
 if (course) {
 //course deatils like name, description, time, price, etc
   document.getElementById("course_name").innerText = course.title;
-  document.querySelector(".course_image").style.backgroundImage = `url(${course.imageUrl})`;
+  document.querySelector(".course_image").style.backgroundImage = `url({{ asset('${course.imageUrl}') }})`;
   document.getElementById("course_description").innerText = course.description;
   document.getElementById("course_time").innerText = `Time: ${course.time}`;
   //on button show price of course
 //
-var courseEnrollButton = document.getElementById("course_enroll");
+// var courseEnrollButton = document.getElementById("course_enroll");
 
-    // Add a click event listener to the element
-    courseEnrollButton.addEventListener("click", function() {
-        // Get the course ID from the element or wherever it is available
-        var courseId = course.id; // Replace with the actual course ID
+//     // Add a click event listener to the element
+//     courseEnrollButton.addEventListener("click", function() {
+//         // Get the course ID from the element or wherever it is available
+//         var courseId = course.id; // Replace with the actual course ID
 
-        // Construct the URL with the course ID as a query parameter
-        var redirectUrl = "{{ route('coursepurchase') }}?course_id=" + courseId;
+//         // Construct the URL with the course ID as a query parameter
+//         var redirectUrl = "{{ route('coursepurchase') }}?course_id=" + courseId;
 
-        // Redirect to the specified URL
-        window.location.href = redirectUrl;});
+//         // Redirect to the specified URL
+//         window.location.href = redirectUrl;});
 
   document.getElementById("course_enroll").innerHTML = `<button>Enroll for ${course.price}</button>`;
 
