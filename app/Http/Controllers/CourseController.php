@@ -23,7 +23,7 @@ class CourseController extends Controller
     //             'price'=>$course['Price']
     //         ];
     // }
-    // return view('homepage.finance',['course' => $Course]);
+    // return view('StudentHome.finance',['course' => $Course]);
     // }
     // public function development()
     // {
@@ -37,7 +37,7 @@ class CourseController extends Controller
     //             'price'=>$course['Price']
     //         ];
     // }
-    // return view('homepage.development',['course' => $Course]);
+    // return view('StudentHome.development',['course' => $Course]);
     // }
     // public function literature()
     // {
@@ -51,7 +51,7 @@ class CourseController extends Controller
     //             'price'=>$course['Price']
     //         ];
     // }
-    // return view('homepage.literature',['course' => $Course]);
+    // return view('StudentHome.literature',['course' => $Course]);
     // }
     public function coursetype($coursetype)
     {
@@ -78,7 +78,7 @@ class CourseController extends Controller
                 'url' => route('indicourse', ['id' => $course['Course_id']]),
             ];
     }
-    return view('homepage.allcourse',['course' => $Course,'name'=>'Finance']);
+    return view('StudentHome.allcourse',['course' => $Course,'name'=>'Finance']);
         }elseif($coursetype=='development')
         {
             $courseIds = purchased::where('User_id', session('userdata.userid'))->pluck('Course_id')->toArray();
@@ -98,7 +98,7 @@ class CourseController extends Controller
                     'url' => route('indicourse', ['id' => $course['Course_id']]),
                 ];
         }
-        return view('homepage.allcourse',['course' => $Course,'name'=>'Development']);
+        return view('StudentHome.allcourse',['course' => $Course,'name'=>'Development']);
         }
         elseif($coursetype=='literature')
         {
@@ -121,7 +121,7 @@ class CourseController extends Controller
 
             ];
     }
-    return view('homepage.allcourse',['course' => $Course,'name'=>'Literature']);
+    return view('StudentHome.allcourse',['course' => $Course,'name'=>'Literature']);
         }
         elseif($coursetype=='purchased')
         {
@@ -144,7 +144,7 @@ class CourseController extends Controller
                 ];
             //  echo"<pre>";print_r($courses);echo"</pre>";
         }
-        return view('homepage.allcourse',['course' => $Course,'name'=>'Purchased']);
+        return view('StudentHome.allcourse',['course' => $Course,'name'=>'Purchased']);
     }
         else
         {
@@ -177,7 +177,7 @@ class CourseController extends Controller
             // echo "<pre>";
             // print_r(($data));
             // echo "</pre>";
-             return view('homepage.beforePurchase',['course' => $data]);
+             return view('StudentHome.beforePurchase',['course' => $data]);
     }
 
     public function search(Request $request)
@@ -201,7 +201,7 @@ class CourseController extends Controller
             ];
 
     }
-    return view('homepage.search',['course' => $Course,'name'=>'Search Result']);
+    return view('StudentHome.search',['course' => $Course,'name'=>'Search Result']);
 }
                 public function purchase(Request $request)
                 {
@@ -250,6 +250,6 @@ class CourseController extends Controller
             // echo "<pre>";
             // print_r(($data));
             // echo "</pre>";
-             return view('homepage.afterpurchase',['course' => $data]);
+             return view('StudentHome.afterpurchase',['course' => $data]);
             }
 }

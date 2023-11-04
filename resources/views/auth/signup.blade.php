@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+   
 
     <script>
         // Close alert when close button is clicked
@@ -36,6 +36,15 @@
             </button>
         </div>
     @enderror
+    @error('userType')
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ $message }}</strong> <br>
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@enderror
     @error('email')
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>{{ $message }}</strong> <br>
@@ -79,6 +88,7 @@
                         <div class="div">
                             <h5>First Name</h5>
                             <input type="text" class="input" name="firstname" value="{{ old('firstname') }}">
+
                         </div>
                     </div>
                     <div class="input-div">

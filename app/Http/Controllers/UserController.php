@@ -22,139 +22,103 @@ class UserController extends Controller
             'password'=>'required',
             ]
         );
-        if ($request->userType=='Student'){
-        $user=users::where('username','=',$request->username)->first();
-        if($user&&$request->password==$user->password){
-            // Auth::login($user); // Log in the user
-            $data = [
-                'userid'=>$user->user_id,
-                'username' => $request->username,
-                'email' => $user->email,
-                'name' => $request->first_name
-            ];
-            session(['userdata'=>$data]);
-            return redirect('home');
-
-        }else
+        if ($request->userType=='Student')
         {
-            return "userdoesnt easit";
-        }}
-        else{
-            $user=professors::where('username','=',$request->username)->first();
-        if($user&&$request->password==$user->password){
-            Auth::login($user); // Log in the user
+                    $user=users::where('username','=',$request->username)->first();
+                    if($user&&$request->password==$user->password)
+                        {
+                            // Auth::login($user); // Log in the user
+                            $data = [
+                                'userid'=>$user->user_id,
+                                'username' => $request->username,
+                                'email' => $user->email,
+                                'name' => $user->first_name,
+                                'userType'=>$request->userType
+                            ];
+                            session(['userdata'=>$data]);
+                            return redirect('home');
 
-            return redirect('name');
+                        }
+                    else
+                        {
+                            return view('auth.login')->with('error', 'invalid user details');
+                        }
         }
-
-            else
+        else
         {
-            return "userdoesnt easit";
+                $user=professors::where('username','=',$request->username)->first();
+                if($user&&$request->password==$user->password)
+                {
+                    $data = [
+                        'userid'=>$user->Professor_id,
+                        'username' => $user->username,
+                        'email' => $user->email,
+                        'name' => $user->first_name,
+                        'userType'=>$request->userType
+                    ];
+                    session(['userdata'=>$data]);// Log in the user
+
+                    return redirect('home');
+                }
+
+                    else
+                {
+                    return view('auth.login')->with('error', 'invalid user details');
+                }
         }
-        }
-        //  print_r($request->all());
-    //     $credentials = $request->validate([
-    //         'userType' => 'required',
-    //         'username' => 'required',
-    //         'password' => 'required',
-    //     ]);
-
-    //     $userType = $credentials['userType'];
-    //     $modelname=['users','professors'];
-    //     if($userType=='Student')
-    //     {
-    //         $usernameField=$modelname[0] .'username';
-    //         $usernameField=$modelname[0] .'password';
-    //     }
-    //     else{
-    //         $usernameField=$modelname[1] .'username';
-    //         $usernameField=$modelname[1] .'password';
-    //     }
-
-    //     if (Auth::attempt([
-    //         $usernameField => $credentials['username'],
-    //         'password' => $credentials['password'],
-    //     ])) {
-    //         // Authentication passed, check the user's role and redirect accordingly
-    //         $user = Auth::user();
-    //         if ( $userType === 'Student') {
-    //             return redirect()->view('stud');
-    //         } elseif ( $userType === 'teacher') {
-    //             return redirect()->view('prof');
-    //         }
-    // }  return back()->withErrors(['login' => 'Invalid credentials']);
-//     if ($inputfields['userType']=='Student'){
-//     if (auth()->attempt(['username' => $inputfields['username'], 'password' => $inputfields['password'],])) {
-//         // User is logged in
-//         // You can add your logic for user login here
-//         return view('stud'); // Redirect to the user dashboard, for example
-//     }
-//     else{
-//         return back()->withErrors(['login' => 'invalid usertabel']);
-//     }
-// }else{
-//     if (auth()->attempt(['username' => $inputfields['username'], 'password' => $inputfields['password']])) {
-//         // Admin is logged in
-//         // You can add your logic for admin login here
-//         return view('prof'); // Redirect to the admin dashboard, for example
-//     }
-//     else{
-//         return back()->withErrors(['login' => 'invalid profffftable']);
-//     }
-// }
-// 'password' => $inputfields['password']
-
-//             return back()->withErrors(['login' => 'outsidedee']);
-
-    // if (auth()->attempt(['username' => $inputfields['username'],'password' => $inputfields['password'] ])) {
-    //     // Student is logged in
-    //     return view('stud');
-    // } else {
-    //     print_r($inputfields['username']);
-    //     return back()->withErrors(['login' => 'Invalid student credentials']);
-    // }
 
 
 
 }
-    public function signup()
-    {
-        return view('auth.signup');
-    }
+public function signup()
+{
+    return view('auth.signup');
+}
     public function registration(Request $request)
     {
-        $incoming_fields=$request->validate(
+        $request->validate(
             ['firstname' => 'required',
             'lastname' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'username' => 'required|alpha_num|unique:users,username',
-            'password' => 'required|min:8|confirmed', ]
+                'userType'=>'required']
         );
+        if($request['userType']=='Student')
+        {
+            $request->validate(
+                [
+                'email' => 'required|email|unique:users,email',
+                'username' => 'required|alpha_num|unique:users,username',
+                'password' => 'required|min:8|confirmed',
+                ]
+            );
+        }
+        else
+        {
+            $request->validate(
+                [
+                'email' => 'required|email|unique:professors,email',
+                'username' => 'required|alpha_num|unique:professors,username',
+                'password' => 'required|min:8|confirmed',
+                 ]
+            );
+        }
+        //unique:users,username
+        //unique:users,email
         session([
             'username' => $request['username'],
             'email' => $request['email'],
             'password' => $request['password'],
             'firstname' => $request['firstname'],
+            'userType'=>$request['userType'],
             'lastname' => $request['lastname'],
 
+
         ]);
-        // $user=new users;
-        // $user->first_name=$request['firstname'];
-        // $user->last_name=$request['lastname'];
-        // $user->email=$request['email'];
-        // $user->username=$request['username'];
-        // $user->password=$request['password'];
-        // $user->save();
-        //   $maildata=[
-        //     'title'=>'hcbshbcb',
-        //     'body'=>'vehbgfeb'
-        // ];
-        // $email=$request['email'];
-        // Mail::to($email)->send(new ContactMail($maildata));
-        // print_r($request->all());
+
         return $this->sendOtpEmail();
 
     }
+
+
     public function otp()
     {
         return view('auth.otp');
@@ -181,15 +145,36 @@ class UserController extends Controller
         $otp=session('otp');
         // print_r($number);
         if($number==$otp)
-        { $user=new users;
-         $user->first_name=session('firstname');
-         $user->last_name=session('lastname');
-         $user->email=session('email');
-         $user->username=session('username');
-         $user->password=session('password');
-        $user->save();
-        session()->flush();
-            return redirect('/login');}
+        {
+
+        if(session('userType')=='Student')
+            {
+                $user=new users;
+                $user->first_name=session('firstname');
+                $user->last_name=session('lastname');
+                $user->email=session('email');
+                $user->username=session('username');
+                $user->password=session('password');
+                $user->save();
+                session()->flush();
+                    return redirect('/login');
+            }
+        else{
+            $user=new professors();
+
+            $first_name=session('firstname');
+            $last_name=session('lastname');
+            $user->Professor_name=$first_name .' '. $last_name;
+            $user->email=session('email');
+            $user->username=session('username');
+            $user->password=session('password');
+            $user->save();
+            session()->flush();
+                return redirect('/login');
+        }
+    }
+
+
 
         else
         return back()->with('error', 'Invalid OTP. Please try again.');

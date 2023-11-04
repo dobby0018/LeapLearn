@@ -14,21 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    // public function contact()
-    // {
-    //     $maildata=[
-    //         'title'=>'hcbshbcb',
-    //         'body'=>'vehbgfeb'
-    //     ];
-    //     Mail::to('lotlikarabhinav@gmail.com')->send(new ContactMail($maildata));
 
-    // }
-    public function finance()
-    {
-        return view('homepage.finance');
-    }
     public function Home()
-    {
+    {//homepage view of student
+        if(session('userdata.userType')=='Student')
+        {
         $courseIds = purchased::where('User_id', session('userdata.userid'))->pluck('Course_id')->toArray();
             $courses1=courses::whereIn('Course_group',[1,4])->get();
             if (!empty($courseIds)) {
@@ -84,9 +74,7 @@ class HomeController extends Controller
         }
 
         $courses=courses::where('Price',0)->get();
-        // echo"<pre>";
-        // print_r($courses->toArray());
-        // echo"</pre>";
+
         foreach ($courses as $course) {
             $Course[] = [
                 'title' => $course['Course_name'],
@@ -98,22 +86,16 @@ class HomeController extends Controller
             ];
 
     }
-    return view('homepage.home',['course1' => $Course1,'course2' => $Course2,'course3' => $Course3]);
+    return view('StudentHome.home',['course1' => $Course1,'course2' => $Course2,'course3' => $Course3]);
+    }//from here the view of professor in homepage begins
+    else{
+
     }
+}
 
 
 
-    public function homee()
-    {
-        if (session()->has('userdata'))
-        {
-            print_r("yesss");
-        }
-        else{
-            print_r("noo");
 
-        }
-    }
     public function logout()
 {
     // Perform logout actions
