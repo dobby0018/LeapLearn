@@ -89,7 +89,7 @@ class HomeController extends Controller
     return view('StudentHome.home',['course1' => $Course1,'course2' => $Course2,'course3' => $Course3]);
     }//from here the view of professor in homepage begins
     else{
-
+        return view('ProfessorHome.home');
     }
 }
 

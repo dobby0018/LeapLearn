@@ -1,3 +1,5 @@
+@extends('ProfessorHome.layouts.main')
+@section('main-section')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,37 +9,7 @@
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-  <script>
-    $(document).ready(function () {
-      adjustLayoutOnSidebarToggle(); 
-  });
-  
-      $(document).ready(function(){
-        $(".indiv").click(function(){
-           $(".wrapper").toggleClass("collapse");
-        adjustLayoutOnSidebarToggle();
-        });
-      });
-  
-    function adjustLayoutOnSidebarToggle() {
-       const isSidebarCollapsed = $('.wrapper').hasClass('collapse');
-  
-       const courseCards = document.querySelectorAll('.course-card');
 
-        
-    }
-  
-   //footer
-    window.addEventListener('scroll', function() {
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-  
-        document.querySelector('footer').style.display = 'flex';
-      } else {
-        
-        document.querySelector('footer').style.display = 'none';
-      }
-    });
-    </script>
   <style>
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
 
@@ -54,7 +26,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #333; 
+  color: #333;
   }
 
 .wrapper {
@@ -369,7 +341,7 @@ body {
   height: 40px;
   border: 1px solid black;
   border-radius: 10px;
-} 
+}
 
 .time{
  margin-top: 20px;
@@ -409,7 +381,7 @@ form button{
 .module-name{
 	margin-top: 20px;
  font-size: 20px;
- 
+
 }
 
 .module-name textarea{
@@ -461,56 +433,13 @@ form button{
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="top_navbar">
-      <div class="indiv">
-        <img src="img/Leap Learn logo.png" class="logo">
-      </div>
-      <div class="top_menu">
-        <form class="search">
-          <input type="text" placeholder="Search..">
-          <i class="fas fa-search"></i>
-        </form>
-        <ul>
-          <li><a href="#"><i class="fas fa-envelope"></i></a></li>
-          <li><a href="#"><i class="fas fa-user"></i></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="sidebar">
-      <ul>
-        <li><a href="#">
-            <span class="icon"><i class="fas fa-user"></i></span>
-            <span class="title">Profile</span></a></li>
-        <li><a href="#">
-            <span class="icon"><i class="fas fa-lock"></i></span>
-            <span class="title">Transactions</span>
-          </a></li>
-        <li><a href="#">
-            <span class="icon"><i class="fas fa-book"></i></span>
-            <span class="title">My courses</span>
-          </a></li>
-      </ul>
-      <ul class="settings">
-        <li><a href="#">
-            <span class="icon"><i class="fas fa-cog"></i></span>
-            <span class="title">Settings</span>
-          </a></li>
-        <li><a href="#">
-            <span class="icon"><i class="fas fa-info-circle"></i></span>
-            <span class="title">Help</span>
-          </a></li>
-        <li><a href="#">
-            <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
-            <span class="title">Sign out</span>
-          </a></li>
-      </ul>
-    </div>
+
     <div class="main_container">
-     <form>
+     <form action="{{ url('/') }}/prof/newcourse" method="POST" enctype="multipart/form-data">
+        @csrf
       <div class="cname">
        Courese Name:
-       <input type="text" required >
+       <input type="text" name="name"required >
       </div>
 
       <div class="cdes">
@@ -522,21 +451,21 @@ form button{
       <div class="pt">
         <div class="price">
           Price:
-          <input type="number" required >
+          <input type="number" name ="price"required >
         </div>
         <div class="time">
           Time:
-          <input type="text" required >
+          <input type="text" name ="time" required >
         </div>
       </div>
 
       <!--Image-->
       <div class="pic">
         <label for="file-upload" class="custom-file-upload">
-          <i class="fa fa-cloud-upload"></i> Upload Image
+            <i class="fa fa-cloud-upload"></i> Upload Image
         </label>
-        <input id="file-upload" type="file" accept="image/*" required />
-      </div>
+        <input id="file-upload" name="image" type="file" accept="image/*" required />
+    </div>
 
 		<!--Adding modules-->
 		<div id="module-container">
@@ -549,7 +478,7 @@ form button{
 
 
      </form>
-      
+
     </div><!--End of main container-->
   </div>
 
@@ -579,21 +508,21 @@ form button{
 		 function addModuleField() {
 			  const moduleDiv = document.createElement('div');
 			  moduleDiv.classList.add('module');
-			  
+
 			  // Module Name Input
 			  const moduleNameInput = document.createElement('input');
 			  moduleNameInput.type = 'text';
 			  moduleNameInput.name = `modules[${moduleCounter}][name]`;
 			  moduleNameInput.placeholder = 'Module Description';
 			  moduleNameInput.required = true;
-			  
+
 			  // Module Video Input
 			  const moduleVideoInput = document.createElement('input');
 			  moduleVideoInput.type = 'file';
 			  moduleVideoInput.name = `modules[${moduleCounter}][video]`;
 			  moduleVideoInput.accept = 'video/*';
 			  moduleVideoInput.required = true;
-			  
+
 			  // Edit and Delete Buttons
 			  const editButton = document.createElement('button');
 			  editButton.textContent = 'Edit';
@@ -622,7 +551,10 @@ form button{
 </script>
 
 
- 
- 
+
+
 </body>
 </html>
+
+
+@endsection

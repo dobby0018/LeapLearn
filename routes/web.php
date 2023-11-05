@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseEdit;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,10 @@ Route::middleware(['mymiddleware'])->group(function () {
     Route::get('/cours/coursepr',[CourseController::class,'purchase'])->name('coursepurchase');
 Route::get('/course/{id}',[CourseController::class,'course'])->name('indicourse');
 Route::get('/cours/search',[CourseController::class,'search']);
+
+//professors
+Route::get('/prof/newcourse',[CourseEdit::class,'newcourse'])->name('newcourse');
+Route::post('/prof/newcourse',[CourseEdit::class,'store'])->name('newcourse');
 
 });
 Route::get('/u/logout',function(){
