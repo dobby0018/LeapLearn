@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMail;
 use Illuminate\Support\Facades\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 class UserController extends Controller
 {
     public function login()
@@ -25,7 +26,7 @@ class UserController extends Controller
         if ($request->userType=='Student')
         {
                     $user=users::where('username','=',$request->username)->first();
-                    if($user&&$request->password==$user->password)
+                    if($user&& password_verify($request->password,$user->password))
                         {
                             // Auth::login($user); // Log in the user
                             $data = [
@@ -154,9 +155,12 @@ public function signup()
                 $user->last_name=session('lastname');
                 $user->email=session('email');
                 $user->username=session('username');
-                $user->password=session('password');
+                $password=session('password');
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $user->password=$hash;
                 $user->save();
                 session()->flush();
+                Session::flash('message', 'New user has been registered');
                     return redirect('/login');
             }
         else{
@@ -170,6 +174,7 @@ public function signup()
             $user->password=session('password');
             $user->save();
             session()->flush();
+            Session::flash('message', 'New user has been registered');
                 return redirect('/login');
         }
     }

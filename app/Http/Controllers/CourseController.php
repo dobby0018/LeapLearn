@@ -130,6 +130,7 @@ class CourseController extends Controller
 // Convert to indexed array
 
             $courses = courses::whereIn('Course_id', $courseIds)->get();
+            $Course=[];
             foreach ($courses as $course)
             {
                 $Course[] = [
@@ -242,7 +243,7 @@ class CourseController extends Controller
                     return [
                         'title' => "Module $module->Module_no",
                         'description' => $module->Module_desc,
-                        'videoUrl'=> "new.mp4"
+                        'videoUrl'=> $module->video_link
                         // Add more module attributes here if needed
                     ];
                 }),

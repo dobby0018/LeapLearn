@@ -437,9 +437,10 @@ form button{
     <div class="main_container">
      <form action="{{ url('/') }}/prof/newcourse" method="POST" enctype="multipart/form-data">
         @csrf
+        
       <div class="cname">
        Courese Name:
-       <input type="text" name="name"required >
+       <input type="text" name="COURSEname"required >
       </div>
 
       <div class="cdes">

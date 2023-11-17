@@ -58,8 +58,14 @@ Route::get('/cours/search',[CourseController::class,'search']);
 //professors
 Route::get('/prof/newcourse',[CourseEdit::class,'newcourse'])->name('newcourse');
 Route::post('/prof/newcourse',[CourseEdit::class,'store'])->name('newcourse');
-
+Route::get('/prof/course/{name}',[CourseEdit::class,'uuu'])->name('editcourse');
+// Route::post('/prof/course/{name}',[CourseEdit::class,'yyy'])->name('description');
+ Route::post('/cour/{name}',[CourseEdit::class,'yyy'])->name('description');
+  Route::post('/courr/{name}',[CourseEdit::class,'iii'])->name('newmodule');
+ Route::post('/cour/{name}/{id}',[CourseEdit::class,'zzz'])->name('module');
+ Route::delete('/courses/{id}', [CourseEdit::class,'destroy'])->name('courses.destroy');
 });
+
 Route::get('/u/logout',function(){
     session()->forget(['userdata']);
     return redirect('login');

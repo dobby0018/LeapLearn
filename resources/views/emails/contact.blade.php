@@ -8,7 +8,7 @@
 </head>
 <body>
     <p>hello</p>
-<p>boyka</p>
+<p>user</p>
 
 <h1> {{ $maildata['otp'] }}</h1>
 <p>thanks</p>

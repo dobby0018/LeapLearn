@@ -408,12 +408,23 @@
             .UserPreference .course-card img,
             .FreeCourses .course-card img {
                 max-width: 100%;
+                height: 120px;
             }
 
             .Trending .course-card h3,
             .UserPreference .course-card h3,
             .FreeCourses .course-card h3 {
                 font-size: 18px;
+                font-size: 14px;
+                max-height: 100px;
+                /* Adjusted max-height for the description */
+                overflow: hidden;
+                /* Hide overflowing content */
+                text-overflow: ellipsis;
+                /* Display ellipsis for overflowed text */
+                white-space: nowrap;
+                /* Prevent wrapping of text */
+
             }
 
             .Trending .course-card p,
@@ -519,7 +530,7 @@
                 const card = document.createElement('div');
                 card.classList.add('course-card');
                 card.innerHTML = `
-    <img src="{{ asset('${course.imageUrl}') }}" alt="${course.title}" style="width: 100%; height: auto;">
+    <img src="{{ asset('${course.imageUrl}') }}" alt="${course.title}" style="width: 100%;">
     <h3>${course.title}</h3>
     <p>${course.description}</p>
     <p>Level: ${course.level}</p>

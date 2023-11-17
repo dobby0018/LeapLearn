@@ -9,7 +9,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if there is a flashed message
+            var message = "{{ Session::get('message') }}";
 
+            if (message.trim() !== '') {
+                alert(message);
+            }
+        });
+    </script>
 <script>
 // Close alert when close button is clicked
 document.addEventListener("DOMContentLoaded", function() {
@@ -71,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
 @endif
 
 
-	<img class="logo" src="{{ asset('css/style.css') }}">
+	<img class="logo" src="{{ asset('img/logo2.jpeg') }}">
 	<img class="wave" src="{{ asset('img/wave.png') }}">
 	<div class="container">
 		<div class="img">

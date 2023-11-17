@@ -13,7 +13,7 @@
 
             <div class="mySlides fade">
                 <div class="numbertext">1 / 3</div>
-                <img src="img_nature_wide.jpg" alt="img1">
+                <img src="" alt="img1">
             </div>
 
             <div class="mySlides fade">
@@ -153,7 +153,7 @@
                 const card = document.createElement('div');
                 card.classList.add('course-card');
                 card.innerHTML = `
-      <img src="${course.imageUrl}" alt="${course.title}" style="width: 100%; height: auto;">
+      <img src="${course.imageUrl}" alt="${course.title}" style="width: 100%; ">
       <h3>${course.title}</h3>
       <p>${course.description}</p>
       <p>Level: ${course.level}</p>

@@ -89,7 +89,26 @@ class HomeController extends Controller
     return view('StudentHome.home',['course1' => $Course1,'course2' => $Course2,'course3' => $Course3]);
     }//from here the view of professor in homepage begins
     else{
-        return view('ProfessorHome.home');
+        $professor=session('userdata.userid');
+        $courses = courses::where('professor_id', $professor)->get();
+        $Course=[];
+        foreach ($courses as $course)
+            {
+                $Course[] = [
+                    'id'=>$course['Course_id'],
+                    'title' => $course['Course_name'],
+                    'description' => $course['Course_desc'],
+                    'level' => $course['Level'],
+                    'imageUrl' => $course['Image'],
+                    'price'=>$course['Price'],
+                    'url' => route('editcourse', ['name' => $course['Course_id']]),
+
+                ];
+            //  echo"<pre>";print_r($courses);echo"</pre>";
+        }
+        return view('ProfessorHome.home',['course' => $Course,'name'=>'Your']);
+
+
     }
 }
 

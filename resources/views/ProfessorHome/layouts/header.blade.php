@@ -848,7 +848,7 @@ footer .box a:hover {
 <div class="wrapper">
   <div class="top_navbar">
     <div class="indiv">
-      <img src="img/Leap Learn logo.png" class="logo">
+      <img src="{{ asset('img/logo.jpeg') }}" class="logo">
 
     </div>
     <div class="top_menu">

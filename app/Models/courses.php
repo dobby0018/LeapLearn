@@ -11,6 +11,7 @@ class courses extends Model
     use HasFactory;
     protected $table="courses";
     protected $primarykey="Course_id";
+    protected $fillable=['Module_id'];
     public function Professors()
     {
         return $this->belongsTo(related:professors::class);
